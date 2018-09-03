@@ -4,13 +4,15 @@ import sched, time
 import config
 
 from gsheet_reporter import GSheetReporter
+from bme280 import readBME280All
 
 g = GSheetReporter(config.app['jsonFile'], config.app['sheetId'])
 s = sched.scheduler(time.time, time.sleep)
 
 def poll_sensors():
     timestamp = datetime.datetime.now().replace(microsecond=0).isoformat()    
-    return [timestamp, random.randint(5,30), random.randint(20,100), random.randint(100,1000)]
+    temperature, pressure, humidity = readBME280All()
+    return [timestamp, temperature, pressure, humidity]
 
 def report_data(sc): 
     sensor_data = poll_sensors()
