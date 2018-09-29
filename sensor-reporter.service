@@ -3,7 +3,7 @@ Description=Sensor Reporter Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/python3 -u main.py
+ExecStart=/usr/bin/python -u main.py
 WorkingDirectory=/home/pi/stadtwinzerei.lab
 StandardOutput=inherit
 StandardError=inherit
