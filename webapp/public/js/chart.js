@@ -22,12 +22,12 @@ function updatePlots() {
     pressure = data.map((val, idx, arr) => {
       return val.pressure;
     });
-    
-    $("#last").text(label[label.length - 1]);
-    $("#curr_temp").text("Temperatur: "+Math.round(temperature[0]*100)/100+" °C");
-    $("#curr_co2").text("CO2: "+Math.round(co2ppm[0]*100)/100+" ppm");
-    $("#curr_hum").text("rel. Feuchtigkeit: "+Math.round(humidity[0]*100)/100+" %");
-    $("#curr_press").text(pressure[0]);
+    lastElem = label.length - 1
+    $("#last").text(label[lastElem]);
+    $("#curr_temp").text("Temperatur: "+Math.round(temperature[lastElem]*100)/100+" °C");
+    $("#curr_co2").text("CO2: "+Math.round(co2ppm[lastElem]*100)/100+" ppm");
+    $("#curr_hum").text("rel. Feuchtigkeit: "+Math.round(humidity[lastElem]*100)/100+" %");
+    $("#curr_press").text(pressure[lastElem]);
 
     drawChart("temperature", label, temperature, 1);
     drawChart("humidity", label, humidity, 4);
