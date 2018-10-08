@@ -16,7 +16,7 @@ const port = 8080
 
 const db = new lite.Database('../measurements.db')
 
-const sql = "SELECT temperature, pressure, humidity, co2ppm, datetime(created_at,'localtime') as created_at FROM measurement ORDER BY created_at DESC LIMIT 300"
+const sql = "SELECT temperature, pressure, humidity, co2ppm, datetime(created_at,'localtime') as created_at FROM measurement ORDER BY created_at DESC LIMIT 600"
 
 app.get('/measurements', (req, res) => {
     db.all(sql, [], (err, rows) => {

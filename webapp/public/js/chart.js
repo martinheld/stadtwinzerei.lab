@@ -1,5 +1,5 @@
 // chart colors
-var colors = ["#007bff", "#28a745", "#333333", "#c3e6cb", "#dc3545", "#6c757d"];
+var colors = ["#5E8292", "#E7D792", "#D78898", "#c3e6cb", "#dc3545", "#6c757d"];
 
 function updatePlots() {
   $.get("measurements", function(data, status) {
@@ -29,28 +29,28 @@ function updatePlots() {
     $("#curr_hum").text("rel. Feuchtigkeit: "+Math.round(humidity[lastElem]*100)/100+" %");
     $("#curr_press").text(pressure[lastElem]);
 
-    drawChart("temperature", label, temperature, 1);
-    drawChart("humidity", label, humidity, 4);
-    drawChart("ppm", label, co2ppm, 0);
+    drawChart("temperature", 'Temperatur', label, temperature, 0);
+    drawChart("humidity", 'Feuchtigkeit', label, humidity, 1);
+    drawChart("ppm", 'CO2 Ausstoß',label, co2ppm, 2);
     setTimeout(updatePlots, 30000);
   });
 }
 
 updatePlots();
 
-function drawChart(id, labels, data, lineColor) {
+function drawChart(id, title, labels, data, lineColor) {
 
-  var number = document.getElementById('foo');
- 
   var chLine = document.getElementById(id);
   var chartData = {
     labels: labels,
     datasets: [
       {
         data: data,
-        backgroundColor: "transparent",
+        backgroundColor: colors[lineColor],
         borderColor: colors[lineColor],
-        borderWidth: 2,
+        borderWidth: 1,
+        pointRadius: 0,
+        fill: 'start',
         pointBackgroundColor: colors[lineColor]
       }
     ]
@@ -61,10 +61,18 @@ function drawChart(id, labels, data, lineColor) {
       type: "line",
       data: chartData,
       options: {
+        title: {
+          display: true,
+          text: title
+        },
         animation: false,
         scales: {
           yAxes: [
             {
+              scaleLabel: {
+                display: true,
+                labelString: id
+              },
               ticks: {
                 beginAtZero: false
               }
