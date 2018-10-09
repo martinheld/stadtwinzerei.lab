@@ -4,8 +4,6 @@ import os
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
 def insert(values):
     con = None
 
@@ -15,7 +13,7 @@ def insert(values):
                 temperature,\
                 pressure,\
                 humidity,\
-                co2ppm) VALUES (?,?,?,?)"
+                co2ppm) VALUES (%s,%s,%s,%s)"
         with con:
             cur = con.cursor()
             cur.execute(sql, values)
@@ -33,11 +31,11 @@ def create_table():
             cur = con.cursor()
             cur.execute("CREATE TABLE IF NOT EXISTS\
                 measurement (\
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,\
-                    temperature DOUBLE,\
-                    pressure DOUBLE,\
-                    humidity DOUBLE,\
-                    co2ppm DOUBLE,\
+                    id SERIAL PRIMARY KEY,\
+                    temperature REAL,\
+                    pressure REAL,\
+                    humidity REAL,\
+                    co2ppm REAL,\
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
     except pg.Error as e:
         print("Error %s:" % e.args[0])
