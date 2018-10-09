@@ -28,7 +28,6 @@ app.get('/measurements', (req, res) => {
     if (err) {
       console.log(err.stack);
     } else {
-      console.log(resp.rows)
       res.send(resp.rows.reverse());
     }
   });
