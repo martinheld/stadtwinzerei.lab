@@ -19,7 +19,7 @@ const client = new Client({
 });
 client.connect();
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const sql = "SELECT temperature, pressure, humidity, co2ppm, created_at::TIMESTAMP AT TIME ZONE 'UTC+2' as created_at FROM measurement ORDER BY created_at DESC LIMIT 600;";
 
