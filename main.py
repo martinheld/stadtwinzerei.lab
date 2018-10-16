@@ -22,6 +22,7 @@ def report_data(sc):
     print(sensor_data[0], "Reporting Measurements", sensor_data)
     db.insert(tuple(sensor_data[1:]))
     db_pg.insert(tuple(sensor_data[1:]))
+    db_pg.delete_old()
     g.insert("measurements", sensor_data, 2)
     
     s.enter(config.app['pollingDelay'], 1, report_data, (sc,))

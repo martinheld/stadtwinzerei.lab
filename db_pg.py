@@ -24,6 +24,24 @@ def insert(values):
         if con:
             con.close()
 
+def delete_old():
+    try:
+        con = pg.connect(DATABASE_URL, sslmode='require')
+        with con:
+            cur = con.cursor()
+            cur.execute("DELETE FROM measurement WHERE\
+                           id IN ( \
+                               SELECT id FROM measurement WHERE \
+                               created_at < NOW() - INTERVAL '4 DAYS' \
+                            );")
+    except pg.Error as e:
+        print("Error %s:" % e.args[0])
+        sys.exit(1)
+    finally:
+        if con:
+            con.close()
+
+
 def create_table():
     try:
         con = pg.connect(DATABASE_URL, sslmode='require')
